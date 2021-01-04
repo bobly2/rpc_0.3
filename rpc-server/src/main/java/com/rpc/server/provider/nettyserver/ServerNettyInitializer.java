@@ -20,6 +20,6 @@ public class ServerNettyInitializer extends ChannelInitializer<SocketChannel> {
                 new ObjectDecoder(ClassResolvers.cacheDisabled(this.getClass().getClassLoader())));
         socketChannel.pipeline().addLast("encoder", new ObjectEncoder());
         socketChannel.pipeline().addLast(new ServerNettyServerHandler());
-        socketChannel.pipeline().addLast(new HeartBeatClientHandler());
+
     }
 }

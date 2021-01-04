@@ -22,12 +22,14 @@ public class ReigsterNettyInitializer extends ChannelInitializer<SocketChannel> 
         socketChannel.pipeline().addLast("decoder",
                 new ObjectDecoder(ClassResolvers.cacheDisabled(this.getClass().getClassLoader())));
         socketChannel.pipeline().addLast("encoder", new ObjectEncoder());
-        socketChannel.pipeline().addLast(new RegisterServerHandler());
 
+        socketChannel.pipeline().addLast(new IdleStateHandler(2, 2, 2, TimeUnit.SECONDS));
+
+        socketChannel.pipeline().addLast(new RegisterServerHandler());
         //readerIdleTimeSeconds: 读超时.
         //writerIdleTimeSeconds: 写超时
         //allIdleTimeSeconds: 读/写超时.  这三个参数默认的时间单位是秒,如果五秒内ChannelRead()方法未被调用则触发一次userEventTrigger()方法
-        socketChannel.pipeline().addLast(new IdleStateHandler(5, 5, 5, TimeUnit.SECONDS));
+
 
     }
 }

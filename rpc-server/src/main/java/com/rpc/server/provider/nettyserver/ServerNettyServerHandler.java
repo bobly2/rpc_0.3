@@ -30,6 +30,14 @@ public class ServerNettyServerHandler extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        System.out.println("客户端  ServerNettyServerHandler 收到 :" + msg);
+
+        if (msg != null && msg.equals("you are out")) {
+            System.out.println("客户端连接关闭");
+            ctx.channel().closeFuture();
+        } else {
+            ctx.writeAndFlush("pong");
+        }
         ctx.flush();
     }
 
